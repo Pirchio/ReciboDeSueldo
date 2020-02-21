@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Calcularsueldo">
+
+    <EditText
+        android:id="@+id/horastxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginTop="108dp"
+        android:ems="10"
+        android:hint="Nominal Hora"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/h50txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Horas al 50"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/horastxt"
+        app:layout_constraintStart_toStartOf="@+id/horastxt"
+        app:layout_constraintTop_toBottomOf="@+id/horastxt" />
+
+    <EditText
+        android:id="@+id/h100txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Horas al 100"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/h50txt"
+        app:layout_constraintStart_toStartOf="@+id/h50txt"
+        app:layout_constraintTop_toBottomOf="@+id/h50txt" />
+
+    <EditText
+        android:id="@+id/conveniotxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Porcentaje del Convenio"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/h100txt"
+        app:layout_constraintStart_toStartOf="@+id/h100txt"
+        app:layout_constraintTop_toBottomOf="@+id/h100txt" />
+
+    <Button
+        android:id="@+id/calcular"
+        android:layout_width="217dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="35dp"
+        android:background="@color/colorPrimary"
+        android:text="Calcular"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/conveniotxt"
+        app:layout_constraintStart_toStartOf="@+id/conveniotxt"
+        app:layout_constraintTop_toBottomOf="@+id/conveniotxt" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

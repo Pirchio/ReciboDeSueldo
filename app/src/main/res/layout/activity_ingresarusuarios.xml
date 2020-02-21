@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Ingresarusuarios">
+
+    <EditText
+        android:id="@+id/nametxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="98dp"
+        android:layout_marginLeft="98dp"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:layout_width="98dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginLeft="92dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dnitxt">
+
+        <RadioButton
+            android:id="@+id/soltero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Soltero"
+            android:textColorHighlight="#32B137"
+            android:textColorLink="#002D880D"
+            android:textCursorDrawable="@color/colorPrimary" />
+
+        <RadioButton
+            android:id="@+id/casado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Casado"
+            android:textColorHighlight="#32B137"
+            android:textColorLink="#002D880D"
+            android:textCursorDrawable="@color/colorPrimary" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/hijostxt"
+        android:layout_width="111dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginRight="72dp"
+        android:ems="10"
+        android:hint="Cant. Hijos"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dnitxt" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup3"
+        android:layout_width="220dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="105dp"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/dnitxt">
+
+        <RadioButton
+            android:id="@+id/administracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Administracion"
+            android:textColorHighlight="#32B137"
+            android:textColorLink="#002D880D"
+            android:textCursorDrawable="@color/colorPrimary" />
+
+        <RadioButton
+            android:id="@+id/secretario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Secretario"
+            android:textColorHighlight="#32B137"
+            android:textColorLink="#002D880D"
+            android:textCursorDrawable="@color/colorPrimary" />
+
+        <RadioButton
+            android:id="@+id/obrero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Obrero"
+            android:textColorHighlight="#32B137"
+            android:textColorLink="#002D880D"
+            android:textCursorDrawable="@color/colorPrimary" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/snametxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Apellido"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/nametxt"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/nametxt"
+        app:layout_constraintTop_toBottomOf="@+id/nametxt" />
+
+    <CheckBox
+        android:id="@+id/title"
+        android:layout_width="218dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="24dp"
+        android:text="Titulo"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup3"
+        tools:layout_editor_absoluteX="93dp" />
+
+    <EditText
+        android:id="@+id/dnitxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="D.N.I"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/snametxt"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/snametxt"
+        app:layout_constraintTop_toBottomOf="@+id/snametxt" />
+
+    <Button
+        android:id="@+id/guardar"
+        android:layout_width="396dp"
+        android:layout_height="59dp"
+        android:background="@color/colorPrimary"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/day"
+        android:layout_width="41dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:ems="10"
+        android:hint="Día"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/month"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <EditText
+        android:id="@+id/month"
+        android:layout_width="47dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="Mes"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <EditText
+        android:id="@+id/year"
+        android:layout_width="47dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="Año"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/month"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="24dp"
+        android:text="FECHA DE INGRESO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

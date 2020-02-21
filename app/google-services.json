@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "995122223201",
+    "firebase_url": "https://recibo-de-sueldo-fdf48.firebaseio.com",
+    "project_id": "recibo-de-sueldo-fdf48",
+    "storage_bucket": "recibo-de-sueldo-fdf48.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995122223201:android:6346f7cc3a50ae0b613220",
+        "android_client_info": {
+          "package_name": "com.example.recibodesueldo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995122223201-5iqr2t9a2t37ffvltbog263irs3g1a4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.recibodesueldo",
+            "certificate_hash": "96107c26469fa67011eb377800bc3951daf50ed6"
+          }
+        },
+        {
+          "client_id": "995122223201-2596pi6rel3jstdm104vvctq4u7enqmt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-WeFedBzbJ8Fp1r07I19pNjhdLzBZHy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995122223201-2596pi6rel3jstdm104vvctq4u7enqmt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

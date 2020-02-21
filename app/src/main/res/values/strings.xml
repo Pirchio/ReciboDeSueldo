@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Recibo de sueldo</string>
+    <string name="ingresarusuarios">Ingresar Empleado</string>
+    <string name="calcularhoras">Calcular </string>
+</resources>
