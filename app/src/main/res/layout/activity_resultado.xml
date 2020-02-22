@@ -316,8 +316,8 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="20dp"
         android:text="Asignacion Familiar "
         app:layout_constraintStart_toStartOf="parent"
@@ -417,9 +417,9 @@
         android:layout_width="79dp"
         android:layout_height="31dp"
         android:background="@android:color/white"
-        android:onClick="Settext"
+        android:onClick="Ready"
         android:text="↺"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@android:color/holo_green_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

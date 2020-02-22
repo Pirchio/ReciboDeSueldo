@@ -21,13 +21,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Resultado extends AppCompatActivity {
-    String dni,ftimes,nombre,apellido,hijos,profesion,sh100,sh50,snominal,spercent;
+    String dni,ftimes,nombre,apellido,hijos,profesion,sh100,sh50,snominal,spercent,sdtdeducciones;
     int ihijos,iprofesion,ih100,ih50,inominal,ipercent,isueldo,ivh100,ivtitulo;
     boolean btitulo;
     DatabaseReference databaseReference;
     TextView usuario,sueldob,h50,ch50,h100,ch100,titulo,bruto,jubilacion,cjubilacion,ley,cley,sindicato,csindicato,os,conv,cconv,deducciones,
             liquido,asignacion,adicionales,neto,bbase;
-    double dvh50,dbasic,dvjubilacion,dley,dsind,dconv,dliquid,dafamiliar,dneto;
+    double dvh50,dbasic,dtdeducciones,dvjubilacion,dley,dsind,dconv,dliquid,dafamiliar,dneto;
     String sdbasic,sdvjubilacion,sdley,sdsind,sdconv,sdliquid,sdafamiliar,sdneto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +64,10 @@ public class Resultado extends AppCompatActivity {
         databaseReference.child("Empleados").child(dni).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                nombre = dataSnapshot.child("nombre").getValue().toString();
-                apellido= dataSnapshot.child("apellido").getValue().toString();
-                hijos= dataSnapshot.child("hijos").getValue().toString();
-                profesion= dataSnapshot.child("profesion").getValue().toString();
+                nombre = (String) dataSnapshot.child("nombre").getValue();
+                apellido= (String) dataSnapshot.child("apellido").getValue();
+                hijos= (String) dataSnapshot.child("hijos").getValue();
+                profesion= (String) dataSnapshot.child("profesion").getValue();
                 btitulo = (Boolean) dataSnapshot.child("titulo").getValue();
 
                 ihijos= Integer.valueOf(hijos);
@@ -92,7 +92,7 @@ public class Resultado extends AppCompatActivity {
                 ih100 = Integer.valueOf(sh100);
                 ipercent= Integer.valueOf(spercent);
                 inominal= Integer.valueOf(snominal);
-
+                Calculo();
             }
 
             @Override
@@ -103,106 +103,107 @@ public class Resultado extends AppCompatActivity {
 
 
     }
-public void Settext(View v){
-        String oficio;
-        if (btitulo)
-            ivtitulo=800;
-        else ivtitulo=0;
-        String stitulo = String.valueOf(ivtitulo);
-        switch (iprofesion){
-            case 1:isueldo=12000;
+public void Calculo(){
+    String oficio;
+    if (btitulo)
+        ivtitulo=800;
+    else ivtitulo=0;
+    String stitulo = String.valueOf(ivtitulo);
+    switch (iprofesion){
+        case 1:isueldo=12000;
             oficio="administración";
             break;
-            case 2: isueldo=11000;
+        case 2: isueldo=11000;
             oficio="obrero";
             break;
-            case 3:isueldo=10000;
+        case 3:isueldo=10000;
             oficio="secretaría";
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + iprofesion);
-        }
+            break;
+        default:
+            throw new IllegalStateException("Unexpected value: " + iprofesion);
+    }
 
-        dvh50 = (inominal*ih50*1.5);
-        ivh100 = inominal*ih100*2;
-        String dsivh100=String.valueOf(ivh100);
-        String dsdvh50=String.valueOf(dvh50);
+    dvh50 = (inominal*ih50*1.5);
+    ivh100 = inominal*ih100*2;
+    String dsivh100=String.valueOf(ivh100);
+    String dsdvh50=String.valueOf(dvh50);
 
-        dbasic = ivtitulo+ivh100+dvh50+isueldo;
-        sdbasic = String.valueOf(dbasic);
+    dbasic = ivtitulo+ivh100+dvh50+isueldo;
+    sdbasic = String.valueOf(dbasic);
 
-        dvjubilacion = (11*dbasic)/100;
-        sdvjubilacion = String.valueOf(dvjubilacion);
+    dvjubilacion = (11*dbasic)/100;
+    sdvjubilacion = String.valueOf(dvjubilacion);
 
-        String base = String.valueOf(isueldo);
+    String base = String.valueOf(isueldo);
 
-        dley= (3*dbasic)/100;
-        sdley = String.valueOf(dley);
+    dley= (3*dbasic)/100;
+    sdley = String.valueOf(dley);
 
-        dsind= (2*dbasic)/100;
-        sdsind = String.valueOf(dsind);
+    dsind= (2*dbasic)/100;
+    sdsind = String.valueOf(dsind);
 
-        dconv=(ipercent*dbasic)/100;
-        sdconv=String.valueOf(dconv);
+    dconv=(ipercent*dbasic)/100;
+    sdconv=String.valueOf(dconv);
 
-        double dtdeducciones = dvjubilacion+dley+dsind-dconv;
-        String sdtdeducciones = String.valueOf(dtdeducciones);
+    dtdeducciones = dvjubilacion+dley+dsind-dconv;
+    sdtdeducciones = String.valueOf(dtdeducciones);
 
-        dliquid = dbasic - dtdeducciones;
-        sdliquid = String.valueOf(sdliquid);
+    dliquid = dbasic - dtdeducciones;
+    sdliquid = String.valueOf(dliquid);
 
-        dafamiliar = ihijos*800;
-        sdafamiliar=String.valueOf(dafamiliar);
+    dafamiliar = ihijos*800;
+    sdafamiliar=String.valueOf(dafamiliar);
 
-        dneto=dliquid+dafamiliar;
-        sdneto=String.valueOf(dneto);
+    dneto=dliquid+dafamiliar;
+    sdneto=String.valueOf(dneto);
 
-        usuario.setText(nombre+" "+apellido+" DNI:" + dni+" Oficio:"+oficio);
-        ch50.setText(sh50+" horas");
-        ch100.setText(sh100+" horas");
+    usuario.setText(nombre+" "+apellido+" DNI:" + dni+" Oficio:"+oficio);
+    ch50.setText(sh50+" horas");
+    ch100.setText(sh100+" horas");
 
-        sueldob.setText("$"+sdbasic);
-        jubilacion.setText("$"+sdvjubilacion);
-        cjubilacion.setText("11%");
-        ley.setText("$"+sdley);
-        cley.setText("3%");
-        sindicato.setText("$"+sdsind);
-        csindicato.setText("2%");
-        os.setText("$"+sdley);
-        conv.setText("$"+sdconv);
-        cconv.setText(spercent+"%");
-        deducciones.setText("$"+sdtdeducciones);
-        liquido.setText("$"+sdliquid);
-        asignacion.setText(sdafamiliar);
-        adicionales.setText(sdafamiliar);
-        neto.setText(sdneto);
-        titulo.setText(stitulo);
-        h100.setText(dsivh100);
-        h50.setText(dsdvh50);
-        bbase.setText(base);
+    sueldob.setText("$"+sdbasic);
+    jubilacion.setText("$"+sdvjubilacion);
+    cjubilacion.setText("11%");
+    ley.setText("$"+sdley);
+    cley.setText("3%");
+    sindicato.setText("$"+sdsind);
+    csindicato.setText("2%");
+    os.setText("$"+sdley);
+    conv.setText("$"+sdconv);
+    cconv.setText(spercent+"%");
+    deducciones.setText("$"+String.format("%.2f",sdtdeducciones));
+    liquido.setText("$"+sdliquid);
+    asignacion.setText("$"+sdafamiliar);
+    adicionales.setText("$"+sdafamiliar);
+    neto.setText("$"+sdneto);
+    titulo.setText("$"+stitulo);
+    h100.setText("$"+dsivh100);
+    h50.setText("$"+dsdvh50);
+    bbase.setText("$"+base);
+    }
 
-
-    Map<String,Object> map = new HashMap<>();
-    map.put("jubilacion",sdvjubilacion);
-    map.put("ley",sdley);
-    map.put("sindicato",sdsind);
-    map.put("os",sdley);
-    map.put("convenio",sdconv);
-    map.put("porciento convenio",spercent);
-    map.put("deducciones",sdtdeducciones);
-    map.put("liquido",sdliquid);
-    map.put("asignacion",sdafamiliar);
-    map.put("adicionales",sdafamiliar);
-    map.put("neto",sdneto);
-    databaseReference.child("Recibos").child(dni+" "+ftimes).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-        @Override
-        public void onComplete(@NonNull Task<Void> task) {
-            if (task.isSuccessful()){
-                Toast.makeText(Resultado.this,"Datos guardados", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Resultado.this,MainActivity.class));
-                finish();
+    public void Ready (View v){
+        Map<String,Object> map = new HashMap<>();
+        map.put("jubilacion",sdvjubilacion);
+        map.put("ley",sdley);
+        map.put("sindicato",sdsind);
+        map.put("os",sdley);
+        map.put("convenio",sdconv);
+        map.put("porciento convenio",spercent);
+        map.put("deducciones",sdtdeducciones);
+        map.put("liquido",sdliquid);
+        map.put("asignacion",sdafamiliar);
+        map.put("adicionales",sdafamiliar);
+        map.put("neto",sdneto);
+        databaseReference.child("Recibos").child(dni+" "+ftimes).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(Resultado.this,"Datos guardados", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Resultado.this,MainActivity.class));
+                    finish();
+                }
             }
-        }
-    });
+        });
     }
 }
