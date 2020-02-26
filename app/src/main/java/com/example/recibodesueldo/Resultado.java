@@ -80,7 +80,7 @@ public class Resultado extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("Horas y valores").child(dni+" "+ftimes).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Horas y valores").child(String.valueOf(dni)+" "+String.valueOf(ftimes)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 sh50 = dataSnapshot.child("h50").getValue().toString();

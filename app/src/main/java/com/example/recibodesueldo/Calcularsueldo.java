@@ -63,29 +63,34 @@ public class Calcularsueldo extends AppCompatActivity {
                 sh50 = h50.getText().toString();
                 sh100 = h100.getText().toString();
                 sporcentaje = porcentaje.getText().toString();
+                if (snominal.isEmpty()||sh50.isEmpty()||sh100.isEmpty()||sporcentaje.isEmpty()) {
+                    Toast.makeText(Calcularsueldo.this, "Ingrese todos los valores", Toast.LENGTH_SHORT).show();
+                }
+                else {
                     databaseReference.child("Empleados").child(dni).child("times").setValue(ftimes);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("nominal", snominal);
+                    map.put("h50", sh50);
+                    map.put("h100", sh100);
+                    map.put("percent", sporcentaje);
+                    map.put("dni", dni);
+                    map.put("time", ftimes);
+                    databaseReference.child("Horas y valores").child(dni + " " + ftimes).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Calcularsueldo.this, "Datos guardados", Toast.LENGTH_SHORT).show();
+                                Intent result = new Intent(Calcularsueldo.this, Resultado.class);
+                                result.putExtra("dni", dni);
+                                result.putExtra("ftimes", times);
+                                startActivity(result);
+                                finish();
+                            } else
+                                Toast.makeText(Calcularsueldo.this, "fail", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                Map<String, Object> map = new HashMap<>();
-                map.put("nominal", snominal);
-                map.put("h50", sh50);
-                map.put("h100", sh100);
-                map.put("percent", sporcentaje);
-                databaseReference.child("Horas y valores").child(dni + " " + ftimes).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Calcularsueldo.this, "Datos guardados", Toast.LENGTH_SHORT).show();
-                            Intent result = new Intent(Calcularsueldo.this, Resultado.class);
-                            result.putExtra("dni", dni);
-                            result.putExtra("ftimes", times);
-                            startActivity(result);
-                            finish();
-                        } else
-                            Toast.makeText(Calcularsueldo.this, "fail", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
+                }
         }
 
             });
