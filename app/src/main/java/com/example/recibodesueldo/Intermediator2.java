@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class Intermediator2 extends AppCompatActivity {
-    private String dni, user1;
+    private String dni, user;
     private DatabaseReference databaseReference;
     private Button elegir;
     private int i;
@@ -51,15 +51,13 @@ public class Intermediator2 extends AppCompatActivity {
                 String value3 = dataSnapshot.child("dni").getValue().toString();
                 String value1 = dataSnapshot.child("time").getValue().toString();
                 if (value3.equals(dni)) {
-                    arrayList.add(" DNI: " + value3 + " time: " + value1);
+                    arrayList.add(value3 + " " + value1);
                     arrayAdapter.notifyDataSetChanged();
                 }
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String user = (String) listView.getItemAtPosition(position);
-
-                        user1 = user.replaceAll("\\D+","");
+                        user = (String) listView.getItemAtPosition(position);
 
                     }
                 });
@@ -86,5 +84,18 @@ public class Intermediator2 extends AppCompatActivity {
             }
         });
 
+        elegir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user!=null){
+                    Toast.makeText(Intermediator2.this,user, Toast.LENGTH_SHORT).show();
+                    Intent result = new Intent(Intermediator2.this, Resultado.class);
+                    result.putExtra("origin", false);
+                    result.putExtra("receipt",user);
+                    startActivity(result);
+                }
+                else Toast.makeText(Intermediator2.this, "Seleccionar un recibo", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -27,7 +27,7 @@ public class Resultado extends AppCompatActivity {
     DatabaseReference databaseReference;
     TextView usuario,sueldob,h50,ch50,h100,ch100,titulo,bruto,jubilacion,cjubilacion,ley,cley,sindicato,csindicato,os,conv,cconv,deducciones,
             liquido,asignacion,adicionales,neto,bbase;
-    double dvh50,dbasic,dtdeducciones,dvjubilacion,dley,dsind,dconv,dliquid,dafamiliar,dneto;
+    double dvh50,dbasic,dvjubilacion,dley,dsind,dconv,dliquid,dafamiliar,dneto;
     String sdbasic,sdvjubilacion,sdley,sdsind,sdconv,sdliquid,sdafamiliar,sdneto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,14 @@ public class Resultado extends AppCompatActivity {
         usuario = findViewById(R.id.name);
         sueldob = findViewById(R.id.sueldobruto);
         h50 = findViewById(R.id.h50);
-        ch50= findViewById(R.id.ch50);
+        ch50 = findViewById(R.id.ch50);
         h100 = findViewById(R.id.h100);
-        ch100= findViewById(R.id.ch100);
+        ch100 = findViewById(R.id.ch100);
         bbase = findViewById(R.id.basico);
         titulo = findViewById(R.id.titulo);
-        jubilacion= findViewById(R.id.jubilacion);
-        cjubilacion= findViewById(R.id.pjubilacion);
-        ley= findViewById(R.id.inssjyd);
+        jubilacion = findViewById(R.id.jubilacion);
+        cjubilacion = findViewById(R.id.pjubilacion);
+        ley = findViewById(R.id.inssjyd);
         cley = findViewById(R.id.cinssjyd);
         sindicato = findViewById(R.id.sindicato);
         csindicato = findViewById(R.id.csindicato);
@@ -57,17 +57,38 @@ public class Resultado extends AppCompatActivity {
         adicionales = findViewById(R.id.adicionales);
         neto = findViewById(R.id.neto);
 
-        dni = getIntent().getStringExtra("dni");
-        ftimes = getIntent().getStringExtra("ftimes");
+        boolean origin;
+        origin = getIntent().getBooleanExtra("origin", false);
+        if (origin) {
+            dni = getIntent().getStringExtra("dni");
+            ftimes = getIntent().getStringExtra("ftimes");
+            GetValue();
+        } else {
+            Toast.makeText(this, "Se sentó en el choclo a desgranar el maiz", Toast.LENGTH_SHORT).show();
+            final String receipt = getIntent().getStringExtra("receipt");
+            databaseReference.child("Horas y valores").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    dni = (String) dataSnapshot.child(receipt).child("dni").getValue();
+                    ftimes = (String) dataSnapshot.child(receipt).child("time").getValue();
+                    GetValue();
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+        }
+    }
+    public void GetValue(){
         databaseReference.child("Empleados").child(dni).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                nombre = (String) dataSnapshot.child("nombre").getValue();
-                apellido= (String) dataSnapshot.child("apellido").getValue();
-                hijos= (String) dataSnapshot.child("hijos").getValue();
-                profesion= (String) dataSnapshot.child("profesion").getValue();
+                nombre = dataSnapshot.child("nombre").getValue().toString();
+                apellido= dataSnapshot.child("apellido").getValue().toString();
+                hijos= dataSnapshot.child("hijos").getValue().toString();
+                profesion= dataSnapshot.child("profesion").getValue().toString();
                 btitulo = (Boolean) dataSnapshot.child("titulo").getValue();
 
                 ihijos= Integer.valueOf(hijos);
@@ -80,7 +101,7 @@ public class Resultado extends AppCompatActivity {
             }
         });
 
-        databaseReference.child("Horas y valores").child(String.valueOf(dni)+" "+String.valueOf(ftimes)).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Horas y valores").child(dni+" "+ftimes).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 sh50 = dataSnapshot.child("h50").getValue().toString();
@@ -92,7 +113,7 @@ public class Resultado extends AppCompatActivity {
                 ih100 = Integer.valueOf(sh100);
                 ipercent= Integer.valueOf(spercent);
                 inominal= Integer.valueOf(snominal);
-                Calculo();
+                Settext();
             }
 
             @Override
@@ -101,88 +122,90 @@ public class Resultado extends AppCompatActivity {
             }
         });
 
+    }
+    public void Settext(){
+        String oficio;
+        if (btitulo)
+            ivtitulo=800;
+        else ivtitulo=0;
+        String stitulo = String.valueOf(ivtitulo);
+        switch (iprofesion){
+            case 1:isueldo=12000;
+                oficio="administración";
+                break;
+            case 2: isueldo=11000;
+                oficio="obrero";
+                break;
+            case 3:isueldo=10000;
+                oficio="secretaría";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + iprofesion);
+        }
+
+        dvh50 = (inominal*ih50*1.5);
+        ivh100 = inominal*ih100*2;
+        String dsivh100=String.valueOf(ivh100);
+        String dsdvh50=String.valueOf(dvh50);
+
+        dbasic = ivtitulo+ivh100+dvh50+isueldo;
+        sdbasic = String.valueOf(dbasic);
+
+        dvjubilacion = (11*dbasic)/100;
+        sdvjubilacion = String.valueOf(dvjubilacion);
+
+        String base = String.valueOf(isueldo);
+
+        dley= (3*dbasic)/100;
+        sdley = String.valueOf(dley);
+
+        dsind= (2*dbasic)/100;
+        sdsind = String.valueOf(dsind);
+
+        dconv=(ipercent*dbasic)/100;
+        sdconv=String.valueOf(dconv);
+
+        double dtdeducciones = dvjubilacion+dley+dsind-dconv;
+        sdtdeducciones = String.valueOf(dtdeducciones);
+
+        dliquid = dbasic - dtdeducciones;
+        sdliquid = String.valueOf(sdliquid);
+
+        dafamiliar = ihijos*800;
+        sdafamiliar=String.valueOf(dafamiliar);
+
+        dneto=dliquid+dafamiliar;
+        sdneto=String.valueOf(dneto);
+
+        usuario.setText(nombre+" "+apellido+" DNI:" + dni+" Oficio:"+oficio);
+        ch50.setText(sh50+" horas");
+        ch100.setText(sh100+" horas");
+
+        sueldob.setText("$"+sdbasic);
+        jubilacion.setText("$"+sdvjubilacion);
+        cjubilacion.setText("11%");
+        ley.setText("$"+sdley);
+        cley.setText("3%");
+        sindicato.setText("$"+sdsind);
+        csindicato.setText("2%");
+        os.setText("$"+sdley);
+        conv.setText("$"+sdconv);
+        cconv.setText(spercent+"%");
+        deducciones.setText("$"+sdtdeducciones);
+        liquido.setText("$"+sdliquid);
+        asignacion.setText(sdafamiliar);
+        adicionales.setText(sdafamiliar);
+        neto.setText(sdneto);
+        titulo.setText(stitulo);
+        h100.setText(dsivh100);
+        h50.setText(dsdvh50);
+        bbase.setText(base);
+
+
 
     }
-public void Calculo(){
-    String oficio;
-    if (btitulo)
-        ivtitulo=800;
-    else ivtitulo=0;
-    String stitulo = String.valueOf(ivtitulo);
-    switch (iprofesion){
-        case 1:isueldo=12000;
-            oficio="administración";
-            break;
-        case 2: isueldo=11000;
-            oficio="obrero";
-            break;
-        case 3:isueldo=10000;
-            oficio="secretaría";
-            break;
-        default:
-            throw new IllegalStateException("Unexpected value: " + iprofesion);
-    }
 
-    dvh50 = (inominal*ih50*1.5);
-    ivh100 = inominal*ih100*2;
-    String dsivh100=String.valueOf(ivh100);
-    String dsdvh50=String.valueOf(dvh50);
-
-    dbasic = ivtitulo+ivh100+dvh50+isueldo;
-    sdbasic = String.valueOf(dbasic);
-
-    dvjubilacion = (11*dbasic)/100;
-    sdvjubilacion = String.valueOf(dvjubilacion);
-
-    String base = String.valueOf(isueldo);
-
-    dley= (3*dbasic)/100;
-    sdley = String.valueOf(dley);
-
-    dsind= (2*dbasic)/100;
-    sdsind = String.valueOf(dsind);
-
-    dconv=(ipercent*dbasic)/100;
-    sdconv=String.valueOf(dconv);
-
-    dtdeducciones = dvjubilacion+dley+dsind-dconv;
-    sdtdeducciones = String.valueOf(dtdeducciones);
-
-    dliquid = dbasic - dtdeducciones;
-    sdliquid = String.valueOf(dliquid);
-
-    dafamiliar = ihijos*800;
-    sdafamiliar=String.valueOf(dafamiliar);
-
-    dneto=dliquid+dafamiliar;
-    sdneto=String.valueOf(dneto);
-
-    usuario.setText(nombre+" "+apellido+" DNI:" + dni+" Oficio:"+oficio);
-    ch50.setText(sh50+" horas");
-    ch100.setText(sh100+" horas");
-
-    sueldob.setText("$"+sdbasic);
-    jubilacion.setText("$"+sdvjubilacion);
-    cjubilacion.setText("11%");
-    ley.setText("$"+sdley);
-    cley.setText("3%");
-    sindicato.setText("$"+sdsind);
-    csindicato.setText("2%");
-    os.setText("$"+sdley);
-    conv.setText("$"+sdconv);
-    cconv.setText(spercent+"%");
-    deducciones.setText("$"+String.format("%.2f",sdtdeducciones));
-    liquido.setText("$"+sdliquid);
-    asignacion.setText("$"+sdafamiliar);
-    adicionales.setText("$"+sdafamiliar);
-    neto.setText("$"+sdneto);
-    titulo.setText("$"+stitulo);
-    h100.setText("$"+dsivh100);
-    h50.setText("$"+dsdvh50);
-    bbase.setText("$"+base);
-    }
-
-    public void Ready (View v){
+    public void Ready (View view){
         Map<String,Object> map = new HashMap<>();
         map.put("jubilacion",sdvjubilacion);
         map.put("ley",sdley);

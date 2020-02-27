@@ -81,6 +81,7 @@ public class Calcularsueldo extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Toast.makeText(Calcularsueldo.this, "Datos guardados", Toast.LENGTH_SHORT).show();
                                 Intent result = new Intent(Calcularsueldo.this, Resultado.class);
+                                result.putExtra("origin", true);
                                 result.putExtra("dni", dni);
                                 result.putExtra("ftimes", times);
                                 startActivity(result);
