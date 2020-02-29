@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +28,14 @@ public class Resultado extends AppCompatActivity {
     DatabaseReference databaseReference;
     TextView usuario,sueldob,h50,ch50,h100,ch100,titulo,bruto,jubilacion,cjubilacion,ley,cley,sindicato,csindicato,os,conv,cconv,deducciones,
             liquido,asignacion,adicionales,neto,bbase;
-    double dvh50,dbasic,dvjubilacion,dley,dsind,dconv,dliquid,dafamiliar,dneto;
+    double dvh50,dbasic,dvjubilacion,dley,dsind,dconv,dliquid,dafamiliar,dneto,dtdeducciones;
     String sdbasic,sdvjubilacion,sdley,sdsind,sdconv,sdliquid,sdafamiliar,sdneto;
+    Button ready;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado);
+        ready = findViewById(R.id.ready);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         usuario = findViewById(R.id.name);
         sueldob = findViewById(R.id.sueldobruto);
@@ -60,11 +63,15 @@ public class Resultado extends AppCompatActivity {
         boolean origin;
         origin = getIntent().getBooleanExtra("origin", false);
         if (origin) {
+            ready.setVisibility(View.VISIBLE);
+            ready.setEnabled(true);
             dni = getIntent().getStringExtra("dni");
             ftimes = getIntent().getStringExtra("ftimes");
             GetValue();
         } else {
             Toast.makeText(this, "Se sentó en el choclo a desgranar el maiz", Toast.LENGTH_SHORT).show();
+            ready.setVisibility(View.INVISIBLE);
+            ready.setEnabled(false);
             final String receipt = getIntent().getStringExtra("receipt");
             databaseReference.child("Horas y valores").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -165,11 +172,11 @@ public class Resultado extends AppCompatActivity {
         dconv=(ipercent*dbasic)/100;
         sdconv=String.valueOf(dconv);
 
-        double dtdeducciones = dvjubilacion+dley+dsind-dconv;
+        dtdeducciones = dvjubilacion+dley+dsind-dconv;
         sdtdeducciones = String.valueOf(dtdeducciones);
 
         dliquid = dbasic - dtdeducciones;
-        sdliquid = String.valueOf(sdliquid);
+        sdliquid = String.valueOf(dliquid);
 
         dafamiliar = ihijos*800;
         sdafamiliar=String.valueOf(dafamiliar);
