@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:screenOrientation="portrait"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Ingresarusuarios">
@@ -11,22 +10,19 @@
         android:id="@+id/nametxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Nombre"
-        android:inputType="textNoSuggestions"
+        android:inputType="textCapSentences"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
         android:layout_width="98dp"
         android:layout_height="64dp"
-        android:layout_marginStart="92dp"
-        android:layout_marginLeft="92dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="@+id/dnitxt"
         app:layout_constraintTop_toBottomOf="@+id/dnitxt">
 
         <RadioButton
@@ -56,12 +52,10 @@
         android:layout_width="111dp"
         android:layout_height="39dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginRight="72dp"
         android:ems="10"
         android:hint="Cant. Hijos"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dnitxt"
         app:layout_constraintTop_toBottomOf="@+id/dnitxt" />
 
     <RadioGroup
@@ -69,9 +63,8 @@
         android:layout_width="220dp"
         android:layout_height="93dp"
         android:layout_marginTop="105dp"
-        app:layout_constraintEnd_toEndOf="@+id/title"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dnitxt">
 
         <RadioButton
@@ -111,7 +104,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Apellido"
-        android:inputType="textNoSuggestions"
+        android:inputType="textCapSentences"
         app:layout_constraintEnd_toEndOf="@+id/nametxt"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/nametxt"
@@ -123,8 +116,9 @@
         android:layout_height="35dp"
         android:layout_marginTop="24dp"
         android:text="Titulo"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup3"
-        tools:layout_editor_absoluteX="93dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup3" />
 
     <EditText
         android:id="@+id/dnitxt"
@@ -149,55 +143,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/day"
-        android:layout_width="41dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:ems="10"
-        android:hint="Día"
-        android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/month"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <EditText
-        android:id="@+id/month"
-        android:layout_width="47dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginLeft="176dp"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:hint="Mes"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <EditText
-        android:id="@+id/year"
-        android:layout_width="47dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:hint="Año"
-        android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/month"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
-
-    <TextView
-        android:id="@+id/fecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="150dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="24dp"
-        android:text="FECHA DE INGRESO"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

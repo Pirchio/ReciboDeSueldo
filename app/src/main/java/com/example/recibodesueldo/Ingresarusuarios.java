@@ -22,12 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Ingresarusuarios extends AppCompatActivity {
-    private TextView nombre, apellido, dni, hijos,dia,mes,año;
+    private TextView nombre, apellido, dni, hijos;
     private String name;
     private String sname;
     private String sdni;
     private String shijos;
-    private String sdia,smes,saño;
     private String profesion;
     private RadioButton casado , administracion,obrero;
     private Boolean bestado,btitulo;//bestadotrue=casado else soltero
@@ -38,10 +37,6 @@ public class Ingresarusuarios extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingresarusuarios);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        dia = (TextView) findViewById(R.id.day);
-        mes = (TextView) findViewById(R.id.month);
-        año = (TextView) findViewById(R.id.year);
 
         nombre = (TextView) findViewById(R.id.nametxt);
         apellido = (TextView) findViewById(R.id.snametxt);
@@ -60,12 +55,6 @@ public class Ingresarusuarios extends AppCompatActivity {
                 sname = apellido.getText().toString();
                 sdni = dni.getText().toString();
                 shijos = hijos.getText().toString();
-                sdia = dia.getText().toString();
-                smes = mes.getText().toString();
-                saño = año.getText().toString();
-
-                int d = Integer.parseInt(sdia);
-                int m = Integer.parseInt(smes);
 
                 bestado = casado.isChecked();
                 btitulo = titulo.isChecked();
@@ -79,13 +68,10 @@ public class Ingresarusuarios extends AppCompatActivity {
                         profesion = "3";
                 }
 
-                if (name.isEmpty() || sname.isEmpty() || sdni.isEmpty() || sdia.isEmpty() || smes.isEmpty() || saño.isEmpty()||shijos.isEmpty())
+                if (name.isEmpty() || sname.isEmpty() || sdni.isEmpty() || shijos.isEmpty())
                     Toast.makeText(Ingresarusuarios.this, "Completá todos los campos", Toast.LENGTH_SHORT).show();
                 else
-                    if (saño.length()!=4)
-                        Toast.makeText(Ingresarusuarios.this,"Ingresá un año válido", Toast.LENGTH_SHORT).show();
-                    else
-                        Guardar();
+                    Guardar();
                 }
         });
     }
@@ -107,9 +93,7 @@ public class Ingresarusuarios extends AppCompatActivity {
             map.put("profesion",profesion);
             map.put("titulo",btitulo);
             map.put("times",times);
-            map.put("día",sdia);
-            map.put("mes",smes);
-            map.put("año",saño);
+
             mDatabase.child("Empleados").child(sdni).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

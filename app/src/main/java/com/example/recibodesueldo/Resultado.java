@@ -69,7 +69,6 @@ public class Resultado extends AppCompatActivity {
             ftimes = getIntent().getStringExtra("ftimes");
             GetValue();
         } else {
-            Toast.makeText(this, "Se sentó en el choclo a desgranar el maiz", Toast.LENGTH_SHORT).show();
             ready.setVisibility(View.INVISIBLE);
             ready.setEnabled(false);
             final String receipt = getIntent().getStringExtra("receipt");

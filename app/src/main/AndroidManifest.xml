@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Intermediator2"></activity>
-        <activity android:name=".Resultado" />
-        <activity android:name=".Intermediator" />
-        <activity android:name=".Calcularsueldo" />
-        <activity android:name=".Ingresarusuarios" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Intermediator2" android:screenOrientation="portrait"></activity>
+        <activity android:name=".Resultado" android:screenOrientation="portrait"/>
+        <activity android:name=".Intermediator" android:screenOrientation="portrait"/>
+        <activity android:name=".Calcularsueldo" android:screenOrientation="portrait"/>
+        <activity android:name=".Ingresarusuarios" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

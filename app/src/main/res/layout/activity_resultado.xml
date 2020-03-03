@@ -414,14 +414,13 @@
 
     <Button
         android:id="@+id/ready"
-        android:layout_width="197dp"
-        android:layout_height="34dp"
+        android:layout_width="57dp"
+        android:layout_height="35dp"
         android:background="@android:color/white"
         android:onClick="Ready"
         android:text="✓"
         android:textColor="@android:color/holo_green_light"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
